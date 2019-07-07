@@ -1,0 +1,41 @@
+<div class="container"
+     fxLayout="column"
+     fxLayoutGap="10px">
+
+  <div fxFlex>
+    <div>
+      <h3>Catalogo</h3>
+      <hr>
+    </div>
+  </div>
+
+  <div fxFlex *ngIf="items">
+    <!--binding del dom al property del objeto
+    [propiedadDelComponente]="valorDesdeElDOM"
+    bind-propiedadDelComponente="valorDesdeElDOM"
+    -->
+    <mat-grid-list [cols]="2" bind-rowHeight="'200px'" [gutterSize]="'10px'">
+      <mat-grid-tile *ngFor="let item of items"
+                     [routerLink]="['/itemdetail', item.id]">
+        <ng-container *ngIf="item.imageList[0]">
+          <img height="200px" data-src="data:image/png;base64,{{item.imageList[0].image}}"
+               alt={{item.name}}
+               >
+        </ng-container>
+        <ng-container *ngIf="!item.imageList[0]">
+          <img height="200px"
+               alt={{item.name}}
+               src='https://image.shutterstock.com/image-vector/no-image-available-icon-photo-260nw-1251146734.jpg'>
+        </ng-container>
+        <mat-grid-tile-footer>
+          <h1 mat-line>{{item.name | uppercase}}</h1>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div [hidden]="items">
+    <mat-spinner></mat-spinner>
+    <h4>Cargando . . . Por favor espere!</h4>
+  </div>
+
+</div>
